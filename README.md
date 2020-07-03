@@ -1,6 +1,6 @@
 # ACDC
 
-ACDC is a simple python discord bot for managing ranks, created in a day.
+ACDC is a simple python discord bot for managing ranks, created in a day. [Commissioned.](https://www.reddit.com/r/RequestABot/comments/hdg88d/request_two_bots_one_for_twitter_one_for_discord/fvrqpp5/?context=3)
 
 ## Installation
 0. Create a bot on discord. Instructions [here.](https://discordpy.readthedocs.io/en/latest/discord.html?highlight=creating%20bot)
