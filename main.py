@@ -11,7 +11,6 @@ config_data = config.table("config")
 users = db.table("users")
 pending = db.table("pending")
 
-
 STAFF_ID = config_data.all()[0]["STAFF_ID"]
 TOKEN = config_data.all()[0]["TOKEN"]
 
