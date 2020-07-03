@@ -3,6 +3,8 @@
 ACDC is a simple python discord bot for managing ranks, created in a day.
 
 ## Installation
+0. Create a bot on discord. Instructions [here.](https://discordpy.readthedocs.io/en/latest/discord.html?highlight=creating%20bot)
+
 1. Download and install python, if you don't already have it. You can get it [here.](https://www.python.org/downloads/)
 
 2. Open terminal or command prompt (depending on your operating system) and`cd` into the directory (folder) you're planning on using.
