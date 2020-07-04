@@ -3,22 +3,23 @@ from tinydb import TinyDB, where, Query
 from tinydb.operations import increment
 import datetime
 
-
 client = discord.Client()
 db = TinyDB("db.json")
 config = TinyDB("config.json")
 config_data = config.table("config")
-users = db.table("users")
-pending = db.table("pending")
+users = db.table("users", cache_size=0)
+pending = db.table("pending", cache_size=0)
 
 STAFF_ID = config_data.all()[0]["STAFF_ID"]
 TOKEN = config_data.all()[0]["TOKEN"]
+
 
 @client.event
 async def on_ready():
     print('We have logged in as {0.user}'.format(client))
     print(f"PENDING ALL: {pending.all()}")
     print(f"USERS ALL: {users.all()}")
+
 
 @client.event
 async def on_message(message):
@@ -30,7 +31,7 @@ async def on_message(message):
         query = Query()
         user = users.search(query.name == author_id)
         if (len(user) == 0):
-            users.insert({"name" : author_id, "rank" : 1})
+            users.insert({"name": author_id, "rank": 1})
             user = users.search(query.name == author_id)
 
         rank = user[-1]['rank']
@@ -41,7 +42,7 @@ async def on_message(message):
 
         print(f"OUTBOUND ID: {outbound.id}")
 
-        pending.insert({"message_id" : outbound.id, "user" : author_id})
+        pending.insert({"message_id": outbound.id, "user": author_id})
 
         await outbound.add_reaction("👍")
         await outbound.add_reaction("👎")
@@ -55,11 +56,12 @@ async def on_message(message):
         msg = ""
 
         for i in mentions:
+            cur_id = str(i.id)
             query = Query()
-            user = users.search(query.name == i.id)
+            user = users.search(query.name == cur_id)
             if (len(user) == 0):
-                users.insert({"name": i.id, "rank": 1})
-                user = users.search(query.name == i.id)
+                users.insert({"name": cur_id, "rank": 1})
+                user = users.search(query.name == cur_id)
 
             rank = user[-1]['rank']
             msg += f"{i.mention} is rank {rank} \n\n"
@@ -88,8 +90,8 @@ async def on_raw_reaction_add(payload):
     elif (str(payload.emoji) == "👎"):
         print("thumbsdown from mod")
         pending.remove(where('message_id') == payload.message_id)
-    else: print(payload.emoji)
-
+    else:
+        print(payload.emoji)
 
 
 client.run(TOKEN)
